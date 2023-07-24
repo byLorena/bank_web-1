@@ -8,6 +8,13 @@ const AddCoin = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  const isNameValid = name.length >= 3;
+
+  const handleChange = (event: any) => {
+    setName(event.target.value);
+  };
+
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     await fetch(ApiFetch.addCoin, {
@@ -52,7 +59,7 @@ const AddCoin = () => {
         </Form.Group>
 
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={!isNameValid}>
           Submit
         </Button>
       </Form>

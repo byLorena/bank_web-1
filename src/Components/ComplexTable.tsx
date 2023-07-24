@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+
 const ComplexTable = ({ data, url }: any) => {
     const navigate = useNavigate();
     const onDelete = async (id: number) => {
@@ -17,6 +19,19 @@ const ComplexTable = ({ data, url }: any) => {
     const onEdit = () => {
         alert('Edit');
     }
+
+    const getShortenedDescription = (description: any) => {
+        if (description.length > 30) {
+            return `${description.substring(0, 30)}...`;
+        }
+        return description;
+        }
+        
+        const formatDate = (dateTimeString: any) => {
+            const formattedDate = format(new Date(dateTimeString), "dd/MM/yyyy, HH:mm");
+            return formattedDate;
+            }
+
     return (
         <div>
             <Table striped bordered hover>
@@ -25,6 +40,8 @@ const ComplexTable = ({ data, url }: any) => {
                         <th>#</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th> When</th>
+                        <th> Updated</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -33,7 +50,10 @@ const ComplexTable = ({ data, url }: any) => {
                         <tr key={index}>
                             <td>{current.id}</td>
                             <td>{current.name}</td>
-                            <td>{current.description}</td>
+                            <td title={current.description} > {getShortenedDescription(current.description)}</td>
+                            <td>{formatDate(current.when)}</td>
+                            <td>{formatDate(current.updated)}</td>
+                            
                             <td>
                                 <button onClick={() => onDelete(current.id)} className="btn btn-danger" style={{ marginRight: '10px' }}>Delete</button>
                                 <button onClick={() => { navigate(`/editCoin/${current.id}`) }} className="btn btn-primary">Edit</button>

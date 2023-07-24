@@ -2,12 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApiFetch from '../service/ApiCalls/request';
+import Swal from 'sweetalert2'
 
 const EditCoin = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const { id } = useParams();
+
+  const saved = () => {
+    try {
+
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Edit succesfully!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      
+    } catch (error) {
+      console.error(error);
+    }
+    
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +84,7 @@ const EditCoin = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" onClick={saved} >
           Save
         </Button>
       </Form>

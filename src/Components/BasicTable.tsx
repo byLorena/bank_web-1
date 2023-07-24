@@ -2,8 +2,9 @@ import { Table } from "antd";
 
 const BasicTable = (props: any) => {
   return (
-    <div>
-      <Table
+    <div >
+      <Table 
+        //striped bordered hover 
         columns={props.colType}
         dataSource={props.data}
         pagination={{ pageSize: 5 }}
